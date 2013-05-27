@@ -6,8 +6,8 @@ threadsafe: true
 
 handlers:
 - url: /favicon\.ico
-  static_files: static/img/favicon.ico
-  upload: /static/img/favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon\.ico
   expiration: "5d"
 
 - url: /static/stylesheets

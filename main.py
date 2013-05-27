@@ -44,4 +44,5 @@ application = webapp2.WSGIApplication([
     ('/products/', ProductsPage),
     ('/contactus/', ContactUsPage),
     ('/enquiry/', EnquiryPage),
+    ('/_ah/warmupenquiry/', EnquiryPage),
     ], debug=True)
