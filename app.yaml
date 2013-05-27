@@ -1,9 +1,28 @@
 application: standarddiesgzb
 version: live
+runtime: python27
 api_version: 1
-runtime: python
+threadsafe: true
 
 handlers:
-- url: .*
-  script: main.py
+- url: /favicon\.ico
+  static_files: static/img/favicon.ico
+  upload: /static/img/favicon\.ico
+  expiration: "5d"
+
+- url: /static/stylesheets
+  static_dir: static/stylesheets
+
+- url: /.*
+  script: main.application
+
+libraries:
+- name: webapp2
+  version: 2.5.2
+
+- name: jinja2
+  version: 2.6
+
+inbound_services:
+- warmup
 
