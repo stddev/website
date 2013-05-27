@@ -39,10 +39,15 @@ class EnquiryPage(BaseHandler):
     template = 'enquiry.html'
     title = "Enquiries"
 
+class WarmupQueryHandler(webapp2.RequestHandler):
+     def get(self):
+         self.response.write("")
+         return
+
 application = webapp2.WSGIApplication([
     ('/', HomePage),
     ('/products/', ProductsPage),
     ('/contactus/', ContactUsPage),
     ('/enquiry/', EnquiryPage),
-    ('/_ah/warmupenquiry/', EnquiryPage),
+    ('/_ah/warmup', WarmupQueryHandler),
     ], debug=True)
