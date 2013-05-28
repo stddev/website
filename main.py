@@ -11,43 +11,57 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class BaseHandler(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template(self.template)
-        template_values = {'title': self.title} #TODO: Look at internet and see what is the trend and move this into html page
+        template_values = {
+                'title': self.pageTitle,
+                'active_pageID': self.pageID,
+                'navigation_bar': navBar
+                }
         self.response.write(template.render(template_values))
         return
 
+
 class HomePage(BaseHandler):
     template = 'home.html'
-    title = 'Standard Dies And Tools'
+    pageTitle = 'Standard Dies And Tools'
+    pageID = 'home'
+    hRef = '/'
+    navDisplay = 'Home'
+
 
 class ProductsPage(BaseHandler):
     template = 'products.html'
-    title = 'Products'
+    pageTitle = 'Products'
+    pageID = 'Products'
+    hRef = '/products/'
+    navDisplay = 'Products'
 
-class AboutPage(BaseHandler):
-    template = 'aboutus.html'
-    title = 'About us'
-
-class ClientsPage(BaseHandler):
-    template = 'clients.html'
-    title = "Clients"
 
 class ContactUsPage(BaseHandler):
     template = 'contactus.html'
-    title = "Contact us"
+    pageTitle = "Contact"
+    pageID = "Contact"
+    hRef = '/contactus/'
+    navDisplay = 'Contact'
 
 class EnquiryPage(BaseHandler):
     template = 'enquiry.html'
-    title = "Enquiries"
+    pageTitle = "Enquiry"
+    pageID = "Enquiry"
+    hRef = '/enquiry/'
+    navDisplay = 'Enquiry'
 
 class WarmupQueryHandler(webapp2.RequestHandler):
-     def get(self):
-         self.response.write("")
-         return
+    def get(self):
+        self.response.write("")
+        return
+    hRef = '/_ah/warmup/'
 
-application = webapp2.WSGIApplication([
-    ('/', HomePage),
-    ('/products/', ProductsPage),
-    ('/contactus/', ContactUsPage),
-    ('/enquiry/', EnquiryPage),
-    ('/_ah/warmup', WarmupQueryHandler),
-    ], debug=True)
+
+routes = [('/_ah/warmup', WarmupQueryHandler)]
+navBar = []
+
+for cls in [HomePage, ProductsPage, ContactUsPage, EnquiryPage]:
+    routes.append((cls.hRef, cls))
+    navBar.append((cls.hRef, cls.pageID, cls.navDisplay))
+
+application = webapp2.WSGIApplication(routes, debug=True)
