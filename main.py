@@ -50,6 +50,13 @@ class EnquiryPage(BaseHandler):
     hRef = '/enquiry/'
     navDisplay = 'Enquiry'
 
+class AboutPage(BaseHandler):
+    template = 'about.html'
+    pageTitle = "About"
+    pageID = "about"
+    hRef = '/about/'
+    navDisplay = "About"
+
 class WarmupQueryHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write("")
@@ -60,7 +67,7 @@ class WarmupQueryHandler(webapp2.RequestHandler):
 routes = [('/_ah/warmup', WarmupQueryHandler)]
 navBar = []
 
-for cls in [HomePage, ProductsPage, ContactUsPage, EnquiryPage]:
+for cls in [HomePage, ProductsPage, ContactUsPage, AboutPage]:
     routes.append((cls.hRef, cls))
     navBar.append((cls.hRef, cls.pageID, cls.navDisplay))
 
